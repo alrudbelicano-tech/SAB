@@ -1,0 +1,259 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A jewelry catalog item sold by SAB Jewelry.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "category": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "finish": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "material": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 5, "maxLength": 1200 },
+        "careNote": { "type": "string", "maxLength": 400 },
+        "regularPrice": { "type": "number" },
+        "salePrice": { "type": "number" },
+        "discountPercent": { "type": "number" },
+        "stock": { "type": "number" },
+        "imageUrl": { "type": "string", "minLength": 5, "maxLength": 350000 },
+        "imageUrl2": { "type": "string", "maxLength": 250000 },
+        "imageUrl3": { "type": "string", "maxLength": 250000 },
+        "videoUrl": { "type": "string", "maxLength": 550000 },
+        "sizes": { "type": "string", "maxLength": 120 },
+        "isFeatured": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "name",
+        "category",
+        "finish",
+        "material",
+        "description",
+        "regularPrice",
+        "salePrice",
+        "discountPercent",
+        "stock",
+        "imageUrl",
+        "isFeatured",
+        "isActive",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order with verified exact-amount Maya or GCash payment.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "orderNumber": { "type": "string", "minLength": 4, "maxLength": 32, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "customerEmail": { "type": "string", "maxLength": 160 },
+        "customerPhone": { "type": "string", "minLength": 7, "maxLength": 24 },
+        "shippingAddress": { "type": "string", "minLength": 10, "maxLength": 400 },
+        "paymentMethod": { "type": "string", "enum": ["GCash", "Maya"] },
+        "paymentReference": { "type": "string", "minLength": 8, "maxLength": 64 },
+        "paymentProofUrl": { "type": "string", "maxLength": 250000 },
+        "subtotal": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "shippingZone": { "type": "string", "maxLength": 100 },
+        "shippingProvince": { "type": "string", "maxLength": 120 },
+        "estimatedDelivery": { "type": "string", "maxLength": 80 },
+        "totalAmount": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "exactAmountVerified": { "type": "boolean" },
+        "status": {
+          "type": "string",
+          "enum": ["Pending Verification", "Confirmed", "Packing", "Shipped", "Delivered", "Cancelled"]
+        },
+        "items": { "type": "array" },
+        "notes": { "type": "string", "maxLength": 400 },
+        "gmailNotified": { "type": "boolean" },
+        "shippingEmailSent": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "orderNumber",
+        "userId",
+        "customerName",
+        "customerEmail",
+        "customerPhone",
+        "shippingAddress",
+        "paymentMethod",
+        "paymentReference",
+        "subtotal",
+        "shippingFee",
+        "totalAmount",
+        "amountPaid",
+        "exactAmountVerified",
+        "status",
+        "items",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "OrderTracking": {
+      "title": "OrderTracking",
+      "description": "Non-PII public order status projection for guest order tracking by order number.",
+      "type": "object",
+      "properties": {
+        "orderNumber": { "type": "string", "minLength": 4, "maxLength": 32, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "status": {
+          "type": "string",
+          "enum": ["Pending Verification", "Confirmed", "Packing", "Shipped", "Delivered", "Cancelled"]
+        },
+        "paymentMethod": { "type": "string", "enum": ["GCash", "Maya"] },
+        "totalAmount": { "type": "number" },
+        "itemSummary": { "type": "string", "minLength": 2, "maxLength": 300 },
+        "estimatedDelivery": { "type": "string", "maxLength": 80 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderNumber", "status", "paymentMethod", "totalAmount", "itemSummary", "createdAt", "updatedAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer product review displayed on the storefront.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "productId": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "productName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "rating": { "type": "number" },
+        "comment": { "type": "string", "minLength": 5, "maxLength": 600 },
+        "isApproved": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "authorName", "productId", "productName", "rating", "comment", "isApproved", "createdAt"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Customer contact form submission.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "email": { "type": "string", "minLength": 5, "maxLength": 160 },
+        "subject": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "message": { "type": "string", "minLength": 5, "maxLength": 1500 },
+        "status": { "type": "string", "enum": ["New", "Resolved"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "email", "subject", "message", "status", "createdAt"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Editable storefront copy, banners, shipping rules, and Maya/GCash receiving details.",
+      "type": "object",
+      "properties": {
+        "announcementText": { "type": "string", "maxLength": 160 },
+        "showAnnouncement": { "type": "boolean" },
+        "heroEyebrow": { "type": "string", "maxLength": 80 },
+        "heroTitle": { "type": "string", "minLength": 3, "maxLength": 140 },
+        "heroSubtitle": { "type": "string", "minLength": 5, "maxLength": 320 },
+        "heroCtaLabel": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "heroImageUrl": { "type": "string", "minLength": 5, "maxLength": 350000 },
+        "storyTitle": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "storyBody": { "type": "string", "minLength": 10, "maxLength": 1000 },
+        "gcashAccountName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "gcashNumber": { "type": "string", "minLength": 7, "maxLength": 24 },
+        "gcashQrUrl": { "type": "string", "maxLength": 350000 },
+        "mayaAccountName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "mayaNumber": { "type": "string", "minLength": 7, "maxLength": 24 },
+        "mayaQrUrl": { "type": "string", "maxLength": 350000 },
+        "storeName": { "type": "string", "maxLength": 80 },
+        "contactPhone": { "type": "string", "maxLength": 24 },
+        "contactEmail": { "type": "string", "maxLength": 160 },
+        "studioHours": { "type": "string", "maxLength": 120 },
+        "categories": { "type": "array" },
+        "shippingFee": { "type": "number" },
+        "freeShippingThreshold": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "announcementText",
+        "showAnnouncement",
+        "heroEyebrow",
+        "heroTitle",
+        "heroSubtitle",
+        "heroCtaLabel",
+        "heroImageUrl",
+        "storyTitle",
+        "storyBody",
+        "gcashAccountName",
+        "gcashNumber",
+        "mayaAccountName",
+        "mayaNumber",
+        "shippingFee",
+        "freeShippingThreshold",
+        "updatedAt"
+      ]
+    },
+    "OwnerProfile": {
+      "title": "OwnerProfile",
+      "description": "Private owner profile photo, display name, and Gmail notification account settings.",
+      "type": "object",
+      "properties": {
+        "ownerName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "profilePhotoUrl": { "type": "string", "maxLength": 250000 },
+        "notificationEmail": { "type": "string", "minLength": 5, "maxLength": 160 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerName", "profilePhotoUrl", "notificationEmail", "updatedAt"]
+    },
+    "PaymentRefLock": {
+      "title": "PaymentRefLock",
+      "description": "Non-PII uniqueness lock preventing reuse of the same GCash or Maya reference number.",
+      "type": "object",
+      "properties": {
+        "refKey": { "type": "string", "maxLength": 80, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "paymentMethod": { "type": "string", "enum": ["GCash", "Maya"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["refKey", "paymentMethod", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Public jewelry catalog managed by admin; stock decremented atomically on verified guest or customer order."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders containing PII, readable and manageable strictly by admin."
+    },
+    "/orderTracking/{orderNumber}": {
+      "schema": { "$ref": "#/entities/OrderTracking" },
+      "description": "Non-PII order status projection looked up by exact order number."
+    },
+    "/paymentRefs/{refId}": {
+      "schema": { "$ref": "#/entities/PaymentRefLock" },
+      "description": "Write-once non-PII lock blocking duplicate GCash or Maya payment reference reuse."
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer product reviews linked to valid products."
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": { "$ref": "#/entities/Inquiry" },
+      "description": "Contact form messages readable only by admin."
+    },
+    "/siteSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Storefront configuration and payment merchant wallet details."
+    },
+    "/ownerSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/OwnerProfile" },
+      "description": "Private owner profile and Gmail alert recipient settings readable and writable strictly by admin."
+    }
+  }
+}
