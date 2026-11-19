@@ -1,0 +1,6 @@
+{
+  "name": "SAB Jewelry",
+  "description": "Minimalist everyday jewelry storefront featuring curated stainless finished steel pieces, verified Maya and GCash exact-amount checkout, customer reviews, order tracking, and an owner storefront dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
